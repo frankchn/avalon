@@ -25,12 +25,13 @@ int cutstock(vector<int> v, int length) {
 
 int main() {
     vector<int> v;
-    v.push_back(4);
-    v.push_back(4);
-    v.push_back(1);
-    v.push_back(3);
-    v.push_back(7);
-    v.push_back(8);
+    int x;
+  
+    while(1) {
+        cin >> x;
+        if(x == 0) break;
+        v.push_back(x);
+    }
     
     cout << "I need " << cutstock(v, 10) << " pieces of stock." << endl;
     return 0;

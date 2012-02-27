@@ -25,6 +25,8 @@
 		</style>
 		<script type="text/javascript">
 
+			var scriptdata = '';
+
 			$(function() {
 				var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 				  mode: "text/x-c++src",
@@ -41,11 +43,12 @@
 			});
 
 			function getCodeForExecution() {
-				$('#output').html('<center>Compiling...</center>');
+				$('#output').html('<center>Compiling...<br><br><img src="img/loading.gif" /></center>');
 				$.post('php/execute.php', { 
 						code: document.getElementById('code').value,
 						language: document.getElementById('language').options[document.getElementById('language').selectedIndex].value
 					}, function(data) {
+					scriptdata = data;
 					document.getElementById('output').innerHTML = "";
 					eval(data);
 				});
@@ -66,7 +69,7 @@
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand">C on the Web</a>
+					<a class="brand">C / C++ on the Web</a>
 				</div>
 			</div>
 		</div>
@@ -79,15 +82,12 @@
 						<option value="c">C</option>
 						<option value="cpp">C++</option>
 					</select>
-					<textarea style="height:600px;" id="code" name="code">
-#include <stdio.h>
+					<textarea style="height:600px;" id="code" name="code">#include <stdio.h>
 
 int main() {
   printf("Hello World!\n");
   return 0;
-}
-
-					</textarea>
+}</textarea>
 					<div style="text-align:right;padding-top:5px;">
 						<input onclick="getCodeForExecution();" type="submit" class="btn primary" name="Submit" value="Run Code!">
 					</div>

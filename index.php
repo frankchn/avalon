@@ -41,7 +41,11 @@
 			});
 
 			function getCodeForExecution() {
-				$.post('php/execute.php', { code: document.getElementById('code').value }, function(data) {
+				$('#output').html('<center>Compiling...</center>');
+				$.post('php/execute.php', { 
+						code: document.getElementById('code').value,
+						language: document.getElementById('language').options[document.getElementById('language').selectedIndex].value
+					}, function(data) {
 					document.getElementById('output').innerHTML = "";
 					eval(data);
 				});
@@ -49,20 +53,20 @@
 			}
 
 			var Module = {
-			print: (function() {
-				return function(text) {
-					document.getElementById('output').innerHTML += text.replace('\n', '<br>', 'g') + '<br>';
-				};
-				})()
-			};		
+				print: (function() {
+					return function(text) {
+						document.getElementById('output').innerHTML += text.replace('\n', '<br>', 'g') + '<br>';
+					};
+				})(),
+			};
 
 		</script>
 	</head>
-	<body style="padding-top:40px">
+	<body style="padding-top:60px">
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand">C/C++ on the Web</a>
+					<a class="brand">C on the Web</a>
 				</div>
 			</div>
 		</div>
@@ -71,12 +75,16 @@
 				<div class="span6">
 					<h2>Source Code</h2>
 					<hr>
+					<select id="language" class="span2">
+						<option value="c">C</option>
+						<option value="cpp">C++</option>
+					</select>
 					<textarea style="height:600px;" id="code" name="code">
 #include <stdio.h>
 
 int main() {
-	printf("Hello!");
-	return 0;
+  printf("Hello World!\n");
+  return 0;
 }
 
 					</textarea>
